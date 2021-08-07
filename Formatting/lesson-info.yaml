@@ -1,0 +1,8 @@
+content:
+- Custom format string
+- Custom datetime format
+- LogRecord attributes
+- Exceptions
+- Logging objects
+- Limiting output
+- String formatting

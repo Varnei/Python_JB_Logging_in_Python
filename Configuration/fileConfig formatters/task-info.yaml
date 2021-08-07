@@ -1,0 +1,90 @@
+type: edu
+files:
+- name: file_config_formatters.py
+  visible: true
+  placeholders:
+  - offset: 69
+    length: 39
+    placeholder_text: enter a name for a new formatter object
+    initial_state:
+      length: 39
+      offset: 69
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: formatter1
+  - offset: 168
+    length: 27
+    placeholder_text: add the formatter name here
+    initial_state:
+      length: 27
+      offset: 168
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: formatter1
+  text: |
+    import logging
+    import logging.config
+
+    config = """
+    [formatters]
+    keys=enter a name for a new formatter object
+
+    [handlers]
+    keys=handler1
+
+    [loggers]
+    keys=root
+
+    [formatter_add the formatter name here]
+    format=%(asctime)s %(levelname)s %(message)s
+
+    [handler_handler1]
+    class=StreamHandler
+    args=()
+    formatter=formatter1
+
+    [logger_root]
+    handlers=handler1
+    level=DEBUG
+    """
+
+    config_filename = 'logging.ini'
+
+    def write_config_file(filename, data):
+        with open(filename, 'w') as fp:
+            fp.write(data)
+
+
+    if __name__ == '__main__':
+        write_config_file(config_filename, config)
+
+        logging.config.fileConfig(config_filename)
+
+        logging.debug('this is a debug message')
+        logging.warning('this is a warning message')
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders, check_answers
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        answers = [
+            ["formatter1"],
+            ["formatter1"],
+        ]
+        check_answers(placeholders, answers)
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

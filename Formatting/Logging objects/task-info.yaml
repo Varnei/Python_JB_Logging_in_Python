@@ -1,0 +1,66 @@
+type: edu
+files:
+- name: log_objects.py
+  visible: true
+  placeholders:
+  - offset: 646
+    length: 3
+    placeholder_text: obj
+    initial_state:
+      length: 3
+      offset: 646
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: repr(obj)
+  text: |
+    # This example shows logging objects
+    #
+
+    import logging
+
+    logger = logging.getLogger('mortgage')
+
+    class Mortgage(object):
+        def __init__(self, principal, rate, term):
+            self.principal = principal
+            self.rate = rate
+            self.term = term
+
+        def __str__(self):
+            return 'Mortgage principal %f for %f years at %f rate' % (
+                self.principal, self.term, self.rate)
+
+        def __repr__(self):
+            return 'Mortgage(%f, %f, %f)' % (self.principal, self.rate, self.term)
+
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.DEBUG)
+
+        obj = Mortgage(100000, 4.1, 15)
+        logger.debug('Created object: %s',obj)
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder == "repr(obj)" or placeholder == "obj.__repr__()":
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

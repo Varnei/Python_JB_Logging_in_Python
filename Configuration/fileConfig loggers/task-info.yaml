@@ -1,0 +1,101 @@
+type: edu
+files:
+- name: file_config_loggers.py
+  visible: true
+  placeholders:
+  - offset: 122
+    length: 31
+    placeholder_text: enter root logger instance name
+    initial_state:
+      length: 31
+      offset: 122
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: root
+  - offset: 301
+    length: 34
+    placeholder_text: enter name of root logger instance
+    initial_state:
+      length: 34
+      offset: 301
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: root
+  - offset: 346
+    length: 30
+    placeholder_text: enter name of handler instance
+    initial_state:
+      length: 30
+      offset: 346
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: handler1
+  text: |
+    import logging
+    import logging.config
+
+    config = """
+    [formatters]
+    keys=formatter1
+
+    [handlers]
+    keys=handler1
+
+    [loggers]
+    keys=enter root logger instance name
+
+    [formatter_formatter1]
+    format=%(asctime)s %(levelname)s %(message)s
+
+    [handler_handler1]
+    class=StreamHandler
+    args=()
+    formatter=formatter1
+
+    [logger_enter name of root logger instance]
+    handlers=enter name of handler instance
+    level=DEBUG
+    """
+
+    config_filename = 'logging.ini'
+
+    def write_config_file(filename, data):
+        with open(filename, 'w') as fp:
+            fp.write(data)
+
+
+    if __name__ == '__main__':
+        write_config_file(config_filename, config)
+
+        logging.config.fileConfig(config_filename)
+
+        logging.debug('this is a debug message')
+        logging.warning('this is a warning message')
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders, check_answers
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        answers = [
+            ["root"],
+            ["root"],
+            ["handler1"]
+        ]
+        check_answers(placeholders, answers)
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

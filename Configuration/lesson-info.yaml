@@ -1,0 +1,8 @@
+content:
+- fileConfig formatters
+- fileConfig handlers
+- fileConfig loggers
+- fileConfig multiple handlers
+- dictConfig
+- dictConfig existing loggers
+- dictConfig root shortcut

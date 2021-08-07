@@ -1,0 +1,79 @@
+type: edu
+files:
+- name: logging_decorator.py
+  visible: true
+  placeholders:
+  - offset: 354
+    length: 42
+    placeholder_text: add our logging decorator do this function
+    initial_state:
+      length: 42
+      offset: 354
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: '@logging_decorator'
+  - offset: 528
+    length: 61
+    placeholder_text: configure the log level to ensure we see the decorator output
+    initial_state:
+      length: 61
+      offset: 528
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: level=logging.DEBUG
+  text: |+
+    import logging
+    import time
+    import functools
+
+    def logging_decorator(f):
+        @functools.wraps(f)
+        def wrapper(*args, **kwargs):
+            logging.debug('Entering %s', f.__name__)
+            start = time.time()
+            f(*args, **kwargs)
+            end = time.time()
+            logging.debug('Exiting %s in %-5.2f secs', f.__name__, end-start)
+
+        return wrapper
+
+    add our logging decorator do this function
+    def do_work(timeout):
+        # Doing something expensive
+        time.sleep(timeout)
+
+
+    if __name__ == '__main__':
+        logging.basicConfig(configure the log level to ensure we see the decorator output)
+        do_work(5)
+
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        if placeholders[0] == "@logging_decorator":
+            passed()
+        else:
+            failed()
+
+        if placeholders[1] == "level=logging.DEBUG":
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

@@ -1,0 +1,66 @@
+type: edu
+files:
+- name: limit_output.py
+  visible: true
+  placeholders:
+  - offset: 748
+    length: 8
+    placeholder_text: big_list
+    initial_state:
+      length: 8
+      offset: 748
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: truncate(big_list, 30)
+  text: |
+    import logging
+
+    def truncate(obj, nlen):
+        """ Convert 'obj' to string and truncate if greater than length"""
+        str_value = str(obj)
+        if len(str_value) > nlen:
+            return str_value[:nlen-3] + '...'
+        return str_value
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.DEBUG)
+
+        long_string = 'A' * 2000
+        logging.debug('something happened with value=%s', long_string)
+
+        # Truncate result (no ellipses)
+        logging.debug('something happened with value=%.10s', long_string)
+
+        # Create a large list
+        big_list = [1] * 2000
+
+        # Log the full list
+        logging.debug('something happened with the list=%s', big_list)
+
+        # Truncate result (with ellipses)
+        logging.debug('something happened with the list=%s', big_list)
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder.startswith("truncate(big_list,"):
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

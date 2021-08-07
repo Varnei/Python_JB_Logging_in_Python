@@ -1,0 +1,71 @@
+type: edu
+files:
+- name: logger_naming.py
+  visible: true
+  placeholders:
+  - offset: 93
+    length: 38
+    placeholder_text: specify the name of the current module
+    initial_state:
+      length: 38
+      offset: 93
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: __name__
+  text: |
+    from __future__ import print_function
+    import math
+    import logging
+
+    logger = logging.getLogger(specify the name of the current module)
+
+    def get_current_rate(years):
+        logger.debug('Fetching current interest rate for %d years', years)
+        rate = 5.3   # Stub external service call
+        logger.debug('Service returned interest rate %f', rate)
+        return rate
+
+    def get_monthly_payment(principal, years):
+        logger.info('Calling mortgage calculator')
+
+        if years > 50:
+            logger.warn('Term greater than 50 years')
+
+        mon_rate = get_current_rate(years)/1200
+        payments = years * 12
+        logger.debug('Number of monthly payments %d', payments)
+        result = principal * (mon_rate/(1-math.pow((1+mon_rate), -payments)))
+
+        logger.debug('Calculated result is %f', result)
+        logger.debug('Leaving mortgage calculator')
+        return result
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.DEBUG)
+        payment = get_monthly_payment(100000, 30)
+        print('Monthly payment is %f' % payment)
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder == "__name__":
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

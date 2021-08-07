@@ -1,0 +1,7 @@
+content:
+- Basic file handler
+- Basic truncate log file
+- Create file handler
+- Set formatter
+- Multiple handlers
+- Separate handler log levels

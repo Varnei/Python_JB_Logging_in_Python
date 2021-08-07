@@ -1,0 +1,70 @@
+type: edu
+files:
+- name: filtering_handler.py
+  visible: true
+  placeholders:
+  - offset: 138
+    length: 19
+    placeholder_text: get the root logger
+    initial_state:
+      length: 19
+      offset: 138
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: logging.getLogger()
+  - offset: 200
+    length: 30
+    placeholder_text: add the filter to each handler
+    initial_state:
+      length: 30
+      offset: 200
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: handler.addFilter(log_filter)
+  text: |+
+    import logging
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.DEBUG)
+
+        log_filter = logging.Filter('A')
+
+        root = get the root logger
+        for handler in root.handlers:
+            add the filter to each handler
+
+        logger1 = logging.getLogger('A')
+        logger1.debug('This is written to log output')
+
+        logger2 = logging.getLogger('A.B')
+        logger2.debug('This is written to log output')
+
+        logger3 = logging.getLogger('B')
+        logger3.debug('This is NOT written to log output, because only names start with "B" are allowed by filter')
+
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders, check_answers
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        answers = [
+            ["logging.getLogger()", "logging.root"],
+            ["handler.addFilter(log_filter)"]
+        ]
+        check_answers(placeholders, answers)
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

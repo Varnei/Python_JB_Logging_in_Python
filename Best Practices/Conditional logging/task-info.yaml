@@ -1,0 +1,55 @@
+type: edu
+files:
+- name: conditional_logging.py
+  visible: true
+  placeholders:
+  - offset: 225
+    length: 54
+    placeholder_text: insert conditional code to test for this logging level
+    initial_state:
+      length: 54
+      offset: 225
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: 'if logger.isEnabledFor(logging.DEBUG):'
+  text: |
+    import logging
+    import time
+
+    logger = logging.getLogger(__name__)
+
+    def calculate_expensive_result(timeout):
+        time.sleep(timeout)
+        return 1
+
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.WARNING)
+
+        insert conditional code to test for this logging level
+            logger.debug('expensive_result=%d', calculate_expensive_result(5))
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder == "if logger.isEnabledFor(logging.DEBUG):":
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

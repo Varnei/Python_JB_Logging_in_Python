@@ -1,0 +1,112 @@
+type: edu
+files:
+- name: timed_rotation.py
+  visible: true
+  placeholders:
+  - offset: 1352
+    length: 16
+    placeholder_text: type of interval
+    initial_state:
+      length: 16
+      offset: 1352
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: '''S'''
+  - offset: 1440
+    length: 21
+    placeholder_text: frequency of rollover
+    initial_state:
+      length: 21
+      offset: 1440
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: 2
+  text: |
+    from __future__ import print_function
+    import math
+    import time
+    import logging
+    import logging.handlers
+
+    logger = logging.getLogger('mortgage')
+
+
+    class DelayFilterer(logging.Filter):
+        """ Logging filter which inserts a delay between each log record """
+        def __init__(self, delay_secs=1):
+            self.delay_secs = delay_secs
+        def filter(self, record):
+            time.sleep(self.delay_secs)
+            return True
+
+    def get_current_rate(years):
+        logging.debug('Fetching current interest rate for %d years', years)
+        rate = 5.3   # Stub external service call
+        logging.debug('Service returned interest rate %f', rate)
+        return rate
+
+    def get_monthly_payment(principal, years):
+        logging.info('Calling mortgage calculator')
+
+        if years > 50:
+            logging.warn('Term greater than 50 years')
+
+        mon_rate = get_current_rate(years)/1200
+        payments = years * 12
+        logging.debug('Number of monthly payments %d', payments)
+        result = principal * (mon_rate/(1-math.pow((1+mon_rate), -payments)))
+
+        logging.debug('Calculated result is %f', result)
+        logging.debug('Leaving mortgage calculator')
+        return result
+
+    if __name__ == '__main__':
+        log_filename = '../../Sandbox/timed_rotation.log'
+        file_handler = logging.handlers.TimedRotatingFileHandler(log_filename,
+                                                                 when=type of interval,
+                                                                 interval=frequency of rollover,
+                                                                 backupCount=4)
+
+        fmt = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+        file_handler.setFormatter(fmt)
+
+        root_logger = logging.getLogger()
+        root_logger.addHandler(file_handler)
+        root_logger.setLevel(logging.DEBUG)
+
+        # Custom filter to place a 1 second delay between each log message
+        root_logger.addFilter(DelayFilterer(delay_secs=1))
+
+        payment = get_monthly_payment(100000, 80)
+        print('Monthly payment is %f' % payment)
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0].replace('"', "'")
+        if placeholder == "'S'" or placeholder == "'s'":
+            passed()
+        else:
+            failed()
+
+        placeholder = placeholders[1]
+        if placeholder == "2":
+            passed()
+        else:
+            failed()
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

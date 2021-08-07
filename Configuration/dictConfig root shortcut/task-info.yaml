@@ -1,0 +1,72 @@
+type: edu
+files:
+- name: dict_config_root.py
+  visible: true
+  placeholders:
+  - offset: 554
+    length: 25
+    placeholder_text: enter name of root logger
+    initial_state:
+      length: 25
+      offset: 554
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: root
+  text: |
+    import logging
+    import logging.config
+
+    logger = logging.getLogger(__name__)
+
+    if __name__ == '__main__':
+        log_config = {
+            'version': 1,
+            'disable_existing_loggers': False,
+            'handlers': {
+                'console': {
+                    'class': 'logging.StreamHandler',
+                    'formatter': 'formatter1',
+                    'stream': 'ext://sys.stdout'
+                }
+
+            },
+            'formatters': {
+                'formatter1': {
+                    'format': '%(asctime)s - %(levelname)s - %(message)s'
+                }
+            },
+            'enter name of root logger': {
+                'level': 'DEBUG',
+                'handlers': ['console', ]
+            }
+        }
+
+        logging.config.dictConfig(log_config)
+
+        logger.warn('This is a warning')
+        logger.debug('test')
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder == "root":
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

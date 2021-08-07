@@ -1,0 +1,86 @@
+type: edu
+files:
+- name: dict_config_existing_loggers.py
+  visible: true
+  placeholders:
+  - offset: 651
+    length: 21
+    placeholder_text: insert name of option
+    initial_state:
+      length: 21
+      offset: 651
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: disable_existing_loggers
+  - offset: 675
+    length: 19
+    placeholder_text: insert option value
+    initial_state:
+      length: 19
+      offset: 675
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: "False"
+  text: |
+    import logging
+    import logging.config
+
+    logger = logging.getLogger(__name__)
+
+    if __name__ == '__main__':
+        log_config = {
+            'version': 1,
+            'handlers': {
+                'console': {
+                    'class': 'logging.StreamHandler',
+                    'formatter': 'formatter1',
+                    'stream': 'ext://sys.stdout'
+                }
+
+            },
+            'formatters': {
+                'formatter1': {
+                    'format': '%(asctime)s - %(levelname)s - %(message)s'
+                }
+            },
+            'loggers': {
+                '': {
+                    'level': 'DEBUG',
+                    'handlers': ['console', ]
+                }
+            },
+            'insert name of option': insert option value
+        }
+
+        logging.config.dictConfig(log_config)
+
+        logger.warn('This is a warning')
+        logger.debug('test')
+
+        logging.root.warn('This is a root logger warning')
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders, check_answers
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        answers = [
+            ['disable_existing_loggers'],
+            ['False', 0]
+        ]
+        check_answers(placeholders, answers)
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

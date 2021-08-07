@@ -1,0 +1,117 @@
+type: edu
+files:
+- name: right_levels.py
+  visible: true
+  placeholders:
+  - offset: 214
+    length: 16
+    placeholder_text: enter level name
+    initial_state:
+      length: 16
+      offset: 214
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: INFO
+  - offset: 300
+    length: 16
+    placeholder_text: enter level name
+    initial_state:
+      length: 16
+      offset: 300
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: ERROR
+  - offset: 408
+    length: 16
+    placeholder_text: enter level name
+    initial_state:
+      length: 16
+      offset: 408
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: INFO
+  - offset: 490
+    length: 16
+    placeholder_text: enter level name
+    initial_state:
+      length: 16
+      offset: 490
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: WARN
+  - offset: 606
+    length: 16
+    placeholder_text: enter level name
+    initial_state:
+      length: 16
+      offset: 606
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: e__ == '
+  - offset: 687
+    length: 16
+    placeholder_text: enter level name
+    initial_state:
+      length: 16
+      offset: 687
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: e__ =
+  text: |
+    import logging
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.DEBUG)
+
+        user_id = 1001
+        ip = '10.0.0.15'
+        port = 5555
+        account_id = 3551
+        version = '1.5.2'
+
+        logging.log(logging.enter level name, 'Service restarted - version %s', version)
+
+        logging.log(logging.enter level name, 'Failed to connect to calculator service at ip=%s:%d', ip, port)
+
+        logging.log(logging.enter level name, 'Created user account id=%d', user_id)
+
+        logging.log(logging.enter level name, 'User entered invalid account id=%d account_id=%d', user_id, account_id)
+
+        logging.log(logging.enter level name, 'Could not connect to user database')
+
+        logging.log(logging.enter level name, 'DB Transaction created for updating user id=%d', user_id)
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders, check_answers
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+
+        answers = [
+            ['INFO', 'DEBUG', 'WARN', 'WARNING'],
+            ['ERROR', 'CRITICAL', 'FATAL'],
+            ['INFO', 'DEBUG'],
+            ['WARN', 'WARNING'],
+            ['CRITICAL', 'FATAL'],
+            ['DEBUG']
+        ]
+        check_answers(placeholders, answers)
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()       # TODO: uncomment test call
+
+
+  learner_created: false
+status: Unchecked
+record: -1

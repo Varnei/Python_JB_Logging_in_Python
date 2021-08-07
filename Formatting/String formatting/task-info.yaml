@@ -1,0 +1,52 @@
+type: edu
+files:
+- name: string_formatting.py
+  visible: true
+  placeholders:
+  - offset: 297
+    length: 14
+    placeholder_text: ' % (''value'', )'
+    initial_state:
+      length: 14
+      offset: 297
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: ', ''value'''
+  text: |+
+    from __future__ import print_function
+    import logging
+
+    logger = logging.getLogger(__name__)
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.WARNING)
+
+        logging.debug('this message is not formatted; value=%s', 'value')
+
+        logging.debug('this message is not formatted; value=%s' % ('value', ))
+
+
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders, check_answers
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        answers = [
+            [', "value"', ',"value"', ",'value'", ", 'value'"]
+        ]
+        check_answers(placeholders, answers)
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

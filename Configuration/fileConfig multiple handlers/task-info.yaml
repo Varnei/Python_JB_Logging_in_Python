@@ -1,0 +1,106 @@
+type: edu
+files:
+- name: file_config_multiple_handlers.py
+  visible: true
+  placeholders:
+  - offset: 128
+    length: 32
+    placeholder_text: enter file handler instance name
+    initial_state:
+      length: 32
+      offset: 128
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: file
+  - offset: 309
+    length: 32
+    placeholder_text: enter file handler instance name
+    initial_state:
+      length: 32
+      offset: 309
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: file
+  - offset: 465
+    length: 32
+    placeholder_text: enter file handler instance name
+    initial_state:
+      length: 32
+      offset: 465
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: file
+  text: |
+    import logging
+    import logging.config
+
+    config = """
+    [loggers]
+    keys=root
+
+    [formatters]
+    keys=formatter1
+
+    [handlers]
+    keys=handler1, enter file handler instance name
+
+    [formatter_formatter1]
+    format=%(asctime)s %(levelname)s %(message)s
+
+    [handler_handler1]
+    class=StreamHandler
+    args=()
+    formatter=formatter1
+
+    [handler_enter file handler instance name]
+    class=FileHandler
+    args=("../../Sandbox/file_config_example.log", )
+    formatter=formatter1
+
+    [logger_root]
+    handlers=handler1, enter file handler instance name
+    level=DEBUG
+    """
+
+    config_filename = 'logging.ini'
+
+    def write_config_file(filename, data):
+        with open(filename, 'w') as fp:
+            fp.write(data)
+
+
+    if __name__ == '__main__':
+        write_config_file(config_filename, config)
+
+        logging.config.fileConfig(config_filename)
+
+        logging.debug('this is a debug message')
+        logging.warning('this is a warning message')
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders, check_answers
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        answers = [
+            ["file"],
+            ["file"],
+            ["file"]
+        ]
+        check_answers(placeholders, answers)
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

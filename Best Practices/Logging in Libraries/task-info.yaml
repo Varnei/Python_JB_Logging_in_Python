@@ -1,0 +1,67 @@
+type: edu
+files:
+- name: library_logging.py
+  visible: true
+  placeholders:
+  - offset: 74
+    length: 53
+    placeholder_text: logger.addHandler(logging.FileHandler('library.log'))
+    initial_state:
+      length: 53
+      offset: 74
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: logger.addHandler(logging.NullHandler())
+  text: |
+    # mortgage library
+    #
+    import logging
+
+    logger = logging.getLogger(__name__)
+    logger.addHandler(logging.FileHandler('library.log'))
+
+    def get_current_rate(years):
+        logger.debug('Fetching current interest rate for %d years', years)
+        rate = 5.3   # Stub external service call
+        logger.debug('Service returned interest rate %f', rate)
+        return rate
+
+    def get_monthly_payment(principal, years):
+        logger.info('Calling mortgage calculator')
+
+        if years > 50:
+            logger.warn('Term greater than 50 years')
+
+        mon_rate = get_current_rate(years)/1200
+        payments = years * 12
+        logger.debug('Number of monthly payments %d', payments)
+        result = principal * (mon_rate/(1-math.pow((1+mon_rate), -payments)))
+
+        logger.debug('Calculated result is %f', result)
+        logger.debug('Leaving mortgage calculator')
+        return result
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder == "logger.addHandler(logging.NullHandler())":
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

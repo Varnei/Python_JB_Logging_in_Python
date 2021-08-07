@@ -1,0 +1,53 @@
+type: edu
+files:
+- name: context.py
+  visible: true
+  placeholders:
+  - offset: 151
+    length: 37
+    placeholder_text: enter a message with relevent context
+    initial_state:
+      length: 37
+      offset: 151
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: service_address
+  text: |
+    import logging
+
+    def do_service_lookup(service_address):
+        try:
+            raise Exception('Connection refused.')
+
+        except:
+            logging.exception(enter a message with relevent context)
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.INFO)
+
+        do_service_lookup('10.0.0.15')
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder.find('service_address') != -1:
+            passed()
+        else:
+            failed('Sorry that is not correct. Check the Hint for more help.')
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

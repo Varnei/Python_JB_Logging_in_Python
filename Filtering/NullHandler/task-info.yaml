@@ -1,0 +1,57 @@
+type: edu
+files:
+- name: null_handler.py
+  visible: true
+  placeholders:
+  - offset: 348
+    length: 29
+    placeholder_text: add a null handler to logger3
+    initial_state:
+      length: 29
+      offset: 348
+    initialized_from_dependency: false
+    selected: false
+    status: Unchecked
+    encrypted_possible_answer: logger3.addHandler(logging.NullHandler())
+  text: |
+    import logging
+
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.DEBUG)
+
+        log_filter = logging.Filter('A')
+
+        logger1 = logging.getLogger('A')
+        logger1.debug('This is written to log output')
+
+        logger2 = logging.getLogger('A.B')
+        logger2.debug('This is written to log output')
+
+        logger3 = logging.getLogger('B')
+        add a null handler to logger3
+        logger3.propagate = False
+        logger3.debug('This is NOT written to log output, because only names start with "B" are allowed by filter')
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from test_helper import run_common_tests, failed, passed, get_answer_placeholders
+
+
+    def test_answer_placeholders():
+        placeholders = get_answer_placeholders()
+        placeholder = placeholders[0]
+        if placeholder == "logger3.addHandler(logging.NullHandler())":
+            passed()
+        else:
+            failed()
+
+
+    if __name__ == '__main__':
+        run_common_tests()
+        test_answer_placeholders()
+
+
+  learner_created: false
+status: Unchecked
+record: -1

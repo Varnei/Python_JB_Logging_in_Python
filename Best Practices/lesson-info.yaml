@@ -1,0 +1,8 @@
+content:
+- Logger naming
+- Private loggers
+- Conditional logging
+- Logging in Libraries
+- Using the right levels
+- Using a decorator
+- Just enough context
